@@ -59,4 +59,5 @@ public class UsersController {
         userService.removeUserWithId(id);
         return "redirect:/";
     }
+
 }
