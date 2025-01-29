@@ -7,7 +7,7 @@
 </head>
 <body>
 
-    <form th:method="POST" th:action="@{/}" th:object="${user}" class="content">
+    <form th:method="POST" th:action="@{/edit}" th:object="${user}" class="content">
         <p>Edit user</p>
         <p>To change user data please change the data in the table</p>
         <table>
@@ -18,7 +18,6 @@
                 <td>Email</td>
             </tr>
             <tr th:block th:each="user : ${users}">
-                <input type="hidden" name="action" value="update">
                 <input type="hidden" name="id" th:value="${user.id}">
                 <td>
                     <input class="userData" name="name" type="text" th:value="${user.name}">
@@ -37,6 +36,11 @@
         <input class="btn" type="submit" value="Edit User">
     </form>
 </body>
+
+<script>
+    let myIn = document.querySelector('.hiddenEl');
+    console.log('User id: ' + myIn.getAttribute('id'));
+</script>
 
 <style>
     * {

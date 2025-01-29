@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/}" th:object="${user}" class="content">
+<form th:method="POST" th:action="@{/remove}" th:object="${user}" class="content">
     <p>Remove user</p>
     <p>Are you sure you want to remove this user?</p>
     <table>
@@ -18,7 +18,6 @@
             <td>Email</td>
         </tr>
         <tr th:block th:each="user : ${users}">
-            <input type="hidden" name="action" value="delete">
             <input type="hidden" name="id" th:value="${user.id}">
             <td>
                 <p class="userData" th:text="${user.name}"></p>
