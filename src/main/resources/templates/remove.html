@@ -7,34 +7,35 @@
 </head>
 <body>
 
-    <form th:method="POST" th:action="@{/edit}" th:object="${user}" class="content">
-        <p>Edit user</p>
-        <p>To change user data please change the data in the table</p>
-        <table>
-            <tr>
-                <td>Name</td>
-                <td>Last Name</td>
-                <td class="age">Age</td>
-                <td>Email</td>
-            </tr>
-            <tr th:block th:each="user : ${users}">
-                <input type="hidden" name="id" th:value="${user.id}">
-                <td>
-                    <input class="userData" name="name" type="text" th:value="${user.name}">
-                </td>
-                <td>
-                    <input class="userData" name="lastName" type="text" th:value="${user.lastName}">
-                </td>
-                <td>
-                    <input class="userData" name="age" type="text" th:value="${user.age}">
-                </td>
-                <td>
-                    <input class="userData" name="email" type="text" th:value="${user.email}">
-                </td>
-            </tr>
-        </table>
-        <input class="btn" type="submit" value="Edit User">
-    </form>
+<form th:method="POST" th:action="@{/remove}" th:object="${user}" class="content">
+    <p>Remove user</p>
+    <p>Are you sure you want to remove this user?</p>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>Last Name</td>
+            <td class="age">Age</td>
+            <td>Email</td>
+        </tr>
+        <tr th:block th:each="user : ${user}">
+            <input type="hidden" name="id" th:value="${user.id}">
+            <td>
+                <p class="userData" th:text="${user.name}"></p>
+            </td>
+            <td>
+                <p class="userData" th:text="${user.lastName}"></p>
+            </td>
+            <td>
+                <p class="userData" th:text="${user.age}"></p>
+            </td>
+            <td>
+                <p class="userData" th:text="${user.email}"></p>
+            </td>
+        </tr>
+    </table>
+    <input class="btn" type="submit" value="Remove User">
+</form>
+
 </body>
 
 <style>
@@ -42,8 +43,8 @@
         margin: 0;
         padding: 0;
         font-family: system-ui, -apple-system, BlinkMacSystemFont,
-                    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
-                    'Open Sans', 'Helvetica Neue', 'sans-serif';
+        'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+        'Open Sans', 'Helvetica Neue', 'sans-serif';
         box-sizing: border-box;
     }
 
@@ -90,10 +91,9 @@
     .userData {
         width: 100%;
         height: 100%;
-        text-align: center;
-        outline: none;
-        border: none;
-        font-size: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .btn {

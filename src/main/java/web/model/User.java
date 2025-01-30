@@ -1,9 +1,10 @@
 package web.model;
 
-import javax.persistence.*;
+
+import jakarta.persistence.*;
 import java.util.Objects;
 
-@Entity
+@Entity(name = "User")
 @Table(name = "users")
 public class User {
 
