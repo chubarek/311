@@ -2,6 +2,7 @@ package web.model;
 
 
 import jakarta.persistence.*;
+
 import java.util.Objects;
 
 @Entity(name = "User")

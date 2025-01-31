@@ -1,29 +1,29 @@
 package web.controller;
 
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.server.ResponseStatusException;
 import web.model.User;
-import web.repository.UserRepository;
+import web.dao.UserDao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
+import web.service.UserService;
 
 @Controller
 public class UserController {
 
+
+    private UserService userService;
+
     @Autowired
-    private UserRepository userRepository;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
 
     @GetMapping("/")
     public String showUserTable(Model model) {
-        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("users", userService.getAll());
         return "index";
     }
 
@@ -34,15 +34,9 @@ public class UserController {
         return "add";
     }
 
-    @PostMapping("/add")
-    public String saveUser(@ModelAttribute("user") User user) {
-        userRepository.save(user);
-        return "redirect:/";
-    }
-
     @GetMapping("/{id}/edit")
-    public String showFormForUpdate(@PathVariable(value = "id") long id, Model model){
-        User user = userRepository.findById(id)
+    public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
+        User user = userService.getById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user id :" + id));
         model.addAttribute("user", user);
         return "edit";
@@ -50,7 +44,19 @@ public class UserController {
 
     @GetMapping("/remove/{id}")
     public String deleteUser(@PathVariable(value = "id") long id) {
-        userRepository.deleteById(id);
+        userService.delete(id);
+        return "redirect:/";
+    }
+
+    @PostMapping("/add")
+    public String saveUser(@ModelAttribute("user") User user) {
+        userService.save(user);
+        return "redirect:/";
+    }
+
+    @PostMapping("/{id}/edit")
+    public String updateSelectedUser(@ModelAttribute("user") User user) {
+        userService.update(user);
         return "redirect:/";
     }
 }
